@@ -1,0 +1,39 @@
+<nb-card>
+  <nb-card-header>
+    Contato
+  </nb-card-header>
+  <nb-card-body>
+    <toaster-container [toasterconfig]='config'></toaster-container>
+    <form (ngSubmit)="enviar()" #form="ngForm">
+      <div class="form-group">
+        <label for="input-tipo">Tipo</label>
+        <select name="fullName" [(ngModel)]="mensagem.tipo" id="input-tipo" #tipo="ngModel" class="form-control" placeholder="Tipo" [disabled]="submitted"
+                [class.form-control-danger]="tipo.invalid && tipo.touched" [required]="true" autofocus>
+          <option>Elogio</option>
+          <option>Sugestão</option>
+          <option>Bug</option>
+          <option>Reclamação</option>
+        </select>
+        <small class="form-text error" *ngIf="tipo.invalid && tipo.touched && tipo.errors?.required">
+          Tipo é obrigatório!
+        </small>
+
+        <small class="form-text error" *ngIf="mensagem.tipo === 'Reclamação'">
+          Tem certeza que quer fazer isso? Se salva não tem volta!
+        </small>
+      </div>
+
+      <div class="form-group">
+        <label for="input-mensagem">Mensagem</label>
+        <textarea name="mensagem" [(ngModel)]="mensagem.mensagem" id="input-mensagem" #msg="ngModel" class="form-control" [required]="true" placeholder="Mensagem" minlength="20" maxlength="500" [disabled]="submitted"></textarea>
+        <small class="form-text error" *ngIf="msg.invalid && msg.touched && msg.errors?.required">
+          Mensagem é obrigatório!
+        </small>
+      </div>
+
+      <button [disabled]="!form.valid || submitted" class="btn btn-block btn-hero-success" [class.btn-pulse]="submitted">
+        Enviar
+      </button>
+    </form>
+  </nb-card-body>
+</nb-card>

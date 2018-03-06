@@ -1,0 +1,79 @@
+<div class="container">
+  <div class="row justify-content-md-center">
+    <div class="col-sm-6">
+      <nb-card>
+        <nb-card-header>
+          Login
+        </nb-card-header>
+        <nb-card-body>
+          <toaster-container [toasterconfig]='config'></toaster-container>
+          <small class="form-text sub-title">Olá! logue com seu Email, CPF ou PIS</small>
+
+          <form (ngSubmit)="login()" #form="ngForm" autocomplete="nope">
+
+            <div *ngIf="errors && errors.length > 0 && !submitted"
+                 class="alert alert-danger" role="alert">
+              <div><strong>Oh snap!</strong></div>
+              <div *ngFor="let error of errors">{{ error }}</div>
+            </div>
+
+            <div *ngIf="messages && messages.length > 0 && !submitted"
+                 class="alert alert-success" role="alert">
+              <div><strong>Hooray!</strong></div>
+              <div *ngFor="let message of messages">{{ message }}</div>
+            </div>
+
+            <div class="form-group">
+              <label for="input-email" class="sr-only">Email address</label>
+              <input name="email" [(ngModel)]="user.email" id="input-email"
+                     class="form-control" placeholder="Email, CPF ou PIS" #email="ngModel"
+                     [class.form-control-danger]="email.invalid && email.touched" autofocus
+                     [required]="true" [disabled]="submitted" [maxlength]="100">
+              <small class="form-text error" *ngIf="email.invalid && email.touched && email.errors?.required">
+                Email é obrigatório!
+              </small>
+              <small class="form-text error"
+                     *ngIf="email.invalid && email.touched && email.errors?.pattern">
+                Email deve ser o real!
+              </small>
+            </div>
+
+            <div class="form-group">
+              <label for="input-password" class="sr-only">Password</label>
+              <input name="password" [(ngModel)]="user.password" type="password" id="input-password"
+                     class="form-control" placeholder="Password" #password="ngModel"
+                     [class.form-control-danger]="password.invalid && password.touched"
+                     [required]="true"
+                     [minlength]="4"
+                     [maxlength]="50" [disabled]="submitted">
+              <small class="form-text error" *ngIf="password.invalid && password.touched && password.errors?.required">
+                Senha é obrigatória!
+              </small>
+              <small
+                class="form-text error"
+                *ngIf="password.invalid && password.touched && (password.errors?.minlength || password.errors?.maxlength)">
+                Senha deve conter de 4 a 20 caracteres!
+              </small>
+            </div>
+
+            <div class="form-group accept-group col-sm-12">
+              <nb-checkbox name="rememberMe" [(ngModel)]="user.rememberMe">Remember me</nb-checkbox>
+              <!--<a class="forgot-password" routerLink="../request-password">Esqueceu a senha?</a>-->
+            </div>
+
+            <button [disabled]="submitted || !form.valid" class="btn btn-block btn-hero-success"
+                    [class.btn-pulse]="submitted">
+              Login
+            </button>
+          </form>
+
+          <div class="links">
+            <small class="form-text">
+              Não tem conta? <a routerLink="../register"><strong>Registre-se</strong></a>
+            </small>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,153 @@
+<nb-card>
+  <nb-card-header>
+    Usuario
+  </nb-card-header>
+  <nb-card-body>
+    <toaster-container [toasterconfig]="config"></toaster-container>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="col-md-4">
+          <span><strong>Nome</strong></span>
+        </div>
+        <div class="col-md-8">
+          <span>{{usuario.nome}}</span>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="col-md-4">
+          <span><strong>PIS</strong></span>
+        </div>
+        <div class="col-md-8">
+          <span>{{usuario.pis}}</span>
+        </div>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>
+
+<nb-card>
+  <nb-card-header>
+    Adicionar Data
+  </nb-card-header>
+  <nb-card-body>
+    <form #f="ngForm" (ngSubmit)="adicionar()">
+
+      <div class="row dataJustificativa">
+        <div class="col-sm-6">
+          <label for="dataJustificativa">Data</label>
+          <div class="input-group">
+            <input type="text" name="dataJustificativa" id="dataJustificativa" class="form-control col-sm-4" placeholder="dd/mm/aaaa" [(ngModel)]="justificativaDia.dataTela" (click)="d.toggle()" ngbDatepicker #d="ngbDatepicker" required>
+            <span class="input-group-btn">
+              <button class="btn btn-primary" (click)="d.toggle()" type="button">
+                <span class="fa fa-calendar"></span>
+              </button>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="form-group">
+            <label for="entrada">Hr Entrada</label>
+            <div class="row alinha-hora">
+              <input id="entrada" name="entrada" type="time" class="form-control col-sm-6" [(ngModel)]="justificativaDia.entrada">
+              <nb-checkbox name="entradaCheck" class="col-sm-1" [(ngModel)]="entradaCheck" (change)="checkHorario('entrada')" data-toggle="tooltip" data-placement="top" title="Horário Padrão 08:00"></nb-checkbox>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group">
+            <label for="saidaAlmoco">Hr Saida Almoço</label>
+            <div class="row alinha-hora">
+              <input id="saidaAlmoco" name="saidaAlmoco" type="time" class="form-control col-sm-6" [(ngModel)]="justificativaDia.saidaAlmoco">
+              <nb-checkbox name="saidaAlmocoCheck" class="col-sm-1" [(ngModel)]="saidaAlmocoCheck" (change)="checkHorario('saidaAlmoco')" data-toggle="tooltip" data-placement="top" title="Horário Padrão 12:00"></nb-checkbox>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group">
+            <label for="retornoAlmoco">Hr Entrada Almoço</label>
+            <div class="row alinha-hora">
+              <input id="retornoAlmoco" name="retornoAlmoco" type="time" class="form-control col-sm-6" [(ngModel)]="justificativaDia.retornoAlmoco">
+              <nb-checkbox name="retornoAlmocoCheck" class="col-sm-1" [(ngModel)]="retornoAlmocoCheck" (change)="checkHorario('retornoAlmoco')" data-toggle="tooltip" data-placement="top" title="Horário Padrão 13:00"></nb-checkbox>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group">
+            <label for="saida">Hr Saida</label>
+            <div class="row alinha-hora">
+              <input id="saida" name="saida" type="time" class="form-control col-sm-6" [(ngModel)]="justificativaDia.saida">
+              <nb-checkbox name="saidaCheck" class="col-sm-1" [(ngModel)]="saidaCheck" (change)="checkHorario('saida')" data-toggle="tooltip" data-placement="top" title="Horário Padrão 17:48"></nb-checkbox>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="form-group">
+            <label for="justificativa">Justificativa</label>
+            <nb-checkbox name="justificativaCheck" class="col-sm-1" [(ngModel)]="justificativaCheck" (change)="checkHorario('justificativa')" data-toggle="tooltip" data-placement="top" title="Justificativa padrão: 'Ponto não Registrado.'"></nb-checkbox>
+            <textarea id="justificativa" name="justificativa" class="form-control" placeholder="Justificativa" maxlength="100" [(ngModel)]="justificativaDia.justificativa" name="justificativa" required></textarea>
+            <span class="justificativa-contador pull-right">Max char {{100 - (justificativaDia.justificativa ? justificativaDia.justificativa.length: 0)}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-sm-12">
+          <div class="form-group">
+            <button class="btn btn-primary" type="submit" [disabled]="!f.valid || !(justificativaDia.entrada || justificativaDia.saidaAlmoco || justificativaDia.retornoAlmoco || justificativaDia.saida)">Adicionar</button>
+            <button class="btn btn-primary" (click)="limpar();">Limpar</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </nb-card-body>
+</nb-card>
+
+<nb-card *ngIf="justificativas && justificativas.length > 0">
+  <nb-card-header>
+    Dias para Justificar
+  </nb-card-header>
+
+  <nb-card-body>
+    <table class="table table-bordered">
+      <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Data</th>
+        <th scope="col">Hr Entrada</th>
+        <th scope="col">Hr Saida Almoço</th>
+        <th scope="col">Hr Entrada Almoço</th>
+        <th scope="col">Hr Saida</th>
+        <th scope="col">Justificativa</th>
+        <th scope="col"></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let j of justificativas; let i = index">
+        <th scope="row">{{i + 1}}</th>
+        <td>{{j.data | date:'dd/MM/yyyy'}}</td>
+        <td>{{j.entrada}}</td>
+        <td>{{j.saidaAlmoco}}</td>
+        <td>{{j.retornoAlmoco}}</td>
+        <td>{{j.saida}}</td>
+        <td>{{j.justificativa}}</td>
+        <td class="justicativa-itens-acoes">
+          <button class="btn btn-primary btn-icon" (click)="editarItem(j)">
+            <i class="ion-edit"></i>
+          </button>
+          <button class="btn btn-danger btn-icon" (click)="excluirItem(j)">
+            <i class="ion-trash-b"></i>
+          </button>
+        </td>
+
+      </tr>
+      </tbody>
+    </table>
+    <button class="btn btn-primary btn-demo" (click)="imprimir()"><i class="ion-printer"></i> Imprimir</button>
+
+  </nb-card-body>
+</nb-card>
+

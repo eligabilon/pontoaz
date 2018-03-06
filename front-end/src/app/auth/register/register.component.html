@@ -1,0 +1,104 @@
+<div class="container">
+  <div class="row justify-content-md-center">
+    <div class="col-sm-8">
+      <nb-card>
+        <nb-card-header>
+          Cadastrar-se
+        </nb-card-header>
+        <nb-card-body>
+          <toaster-container [toasterconfig]='config'></toaster-container>
+          <form (ngSubmit)="register()" #form="ngForm">
+
+            <div *ngIf="errors && errors.length > 0 && !submitted" class="alert alert-danger" role="alert">
+              <div><strong>Oh snap!</strong></div>
+              <div *ngFor="let error of errors">{{ error }}</div>
+            </div>
+            <div *ngIf="messages && messages.length > 0 && !submitted" class="alert alert-success" role="alert">
+              <div><strong>Hooray!</strong></div>
+              <div *ngFor="let message of messages">{{ message }}</div>
+            </div>
+
+            <div class="form-group">
+              <label for="input-name" class="sr-only">Nome</label>
+              <input name="fullName" [(ngModel)]="user.nome" id="input-name" #fullName="ngModel" class="form-control" placeholder="Nome" [disabled]="submitted"
+                     [class.form-control-danger]="fullName.invalid && fullName.touched" [required]="true" [minlength]="4" [maxlength]="100" autofocus>
+              <small class="form-text error" *ngIf="fullName.invalid && fullName.touched && fullName.errors?.required">
+                Nome é obrigatório!
+              </small>
+              <small class="form-text error" *ngIf="fullName.invalid && fullName.touched && (fullName.errors?.minlength || fullName.errors?.maxlength)">
+                O nome completo deve conter de 4 para 100 personagens
+              </small>
+            </div>
+
+            <div class="form-group">
+              <label for="input-cpf" class="sr-only">CPF</label>
+              <input name="cpf" [(ngModel)]="user.cpf" id="input-cpf" #cpf="ngModel" class="form-control" placeholder="CPF" [disabled]="submitted" mask="000.000.000-00">
+            </div>
+
+            <div class="form-group">
+              <label for="input-pis" class="sr-only">PIS</label>
+              <input name="pis" [(ngModel)]="user.pis" id="input-pis" #pis="ngModel" class="form-control" placeholder="PIS" mask="0000.0000.000-0"
+                     [class.form-control-danger]="pis.invalid && pis.touched" [required]="true" [maxlength]="17" [disabled]="submitted">
+              <small class="form-text error" *ngIf="pis.invalid && pis.touched && pis.errors?.required">
+                PIS é obrigatório!
+              </small>
+            </div>
+
+            <div class="form-group">
+              <label for="input-email" class="sr-only">Email address</label>
+              <input name="email" [(ngModel)]="user.email" id="input-email" #email="ngModel" class="form-control" placeholder="Email address" pattern=".+@.+..+"
+                     [class.form-control-danger]="email.invalid && email.touched" [required]="true" [disabled]="submitted" [maxlength]="100" >
+              <small class="form-text error" *ngIf="email.invalid && email.touched && email.errors?.required">
+                Email é obrigatório!
+              </small>
+              <small class="form-text error" *ngIf="email.invalid && email.touched && email.errors?.pattern">
+                Email deve ser o real!
+              </small>
+            </div>
+
+            <div class="form-group">
+              <label for="input-password" class="sr-only">Password</label>
+              <input name="password" [(ngModel)]="user.senha" type="password" id="input-password" class="form-control" placeholder="Password" #password="ngModel"
+                     [class.form-control-danger]="password.invalid && password.touched" [required]="true"
+                     [minlength]="4" [maxlength]="50" [disabled]="submitted">
+              <small class="form-text error" *ngIf="password.invalid && password.touched && password.errors?.required">
+                Senha é obrigatória!
+              </small>
+              <small class="form-text error" *ngIf="password.invalid && password.touched && (password.errors?.minlength || password.errors?.maxlength)">
+                Senha deve conter de 4 a 50 caracteres!
+              </small>
+            </div>
+
+            <div class="form-group">
+              <label for="input-re-password" class="sr-only">Repeat password</label>
+              <input name="rePass" [(ngModel)]="user.confirmPassword" type="password" id="input-re-password" class="form-control" [disabled]="submitted"
+                     placeholder="Confirm Password" #rePass="ngModel" [class.form-control-danger]="(rePass.invalid || password.value != rePass.value) && rePass.touched" [minlength]="4" [maxlength]="50" [required]="true">
+              <small class="form-text error" *ngIf="rePass.invalid && rePass.touched && rePass.errors?.required">
+                A confirmação senha é obrigatória!
+              </small>
+              <small class="form-text error" *ngIf="rePass.touched && password.value != rePass.value && !rePass.errors?.required">
+                A senha não corresponde à senha de confirmação.
+              </small>
+            </div>
+
+            <div class="form-group accept-group col-sm-12">
+              <nb-checkbox name="terms" [(ngModel)]="user.terms" [required]="true" [disabled]="submitted">
+                Concordar com<a routerLink="../termos-de-uso" target="_blank"><strong> Termos e Condições</strong></a>
+              </nb-checkbox>
+            </div>
+
+            <button [disabled]="!form.valid || submitted" class="btn btn-block btn-hero-success" [class.btn-pulse]="submitted">
+              Register
+            </button>
+          </form>
+
+          <div class="links">
+            <small class="form-text">
+              Já tem uma conta? <a routerLink="../login"><strong>Login</strong></a>
+            </small>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,21 @@
+<div class="modal-header">
+  <h2>Contribuidores</h2>
+  <button class="close" aria-label="Close" (click)="closeModal()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="col-sm-4" *ngFor="let c of contribuidores">
+      <div class="row contribuidor">
+        <div class="col-sm-5">
+          <img [src]="c.picture" alt="Imagem Contribuidor" class="img-thumbnail">
+        </div>
+        <div class="col-sm-7">
+          <h1>{{c.nome}}</h1>
+          <span>{{c.funcao}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

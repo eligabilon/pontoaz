@@ -1,0 +1,70 @@
+<nb-card>
+  <nb-card-header>
+    Profile
+  </nb-card-header>
+  <nb-card-body>
+    <toaster-container [toasterconfig]='config'></toaster-container>
+    <form (ngSubmit)="atualizar()" #form="ngForm">
+      <div class="row">
+          <div class="col-sm-3">
+            <img [src]="user.picture" alt="Imagem Usuario" class="img-thumbnail">
+            <button class="btn btn-block btn-hero-primary" (click)="atualizarAvatar()" type="button">
+              Atualizar
+            </button>
+          </div>
+          <div class="col-sm-9">
+            <div *ngIf="errors && errors.length > 0 && !submitted" class="alert alert-danger" role="alert">
+              <div><strong>Oh snap!</strong></div>
+              <div *ngFor="let error of errors">{{ error }}</div>
+            </div>
+            <div *ngIf="messages && messages.length > 0 && !submitted" class="alert alert-success" role="alert">
+              <div><strong>Hooray!</strong></div>
+              <div *ngFor="let message of messages">{{ message }}</div>
+            </div>
+
+            <div class="form-group">
+              <label for="input-name">Nome</label>
+              <input name="fullName" [(ngModel)]="user.nome" id="input-name" #fullName="ngModel" class="form-control" placeholder="Nome" [disabled]="submitted"
+                     [class.form-control-danger]="fullName.invalid && fullName.touched" [required]="true" [minlength]="4" [maxlength]="200" autofocus>
+              <small class="form-text error" *ngIf="fullName.invalid && fullName.touched && fullName.errors?.required">
+                Nome é obrigatório!
+              </small>
+              <small class="form-text error" *ngIf="fullName.invalid && fullName.touched && (fullName.errors?.minlength || fullName.errors?.maxlength)">
+                O nome completo deve conter de 4 para 100 personagens
+              </small>
+            </div>
+
+            <div class="form-group">
+              <label for="input-cpf">CPF</label>
+              <input name="cpf" [(ngModel)]="user.cpf" id="input-cpf" #cpf="ngModel" class="form-control" placeholder="CPF" [disabled]="submitted" mask="000.000.000-00">
+            </div>
+
+            <div class="form-group">
+              <label for="input-pis">PIS</label>
+              <input name="pis" [(ngModel)]="user.pis" id="input-pis" #pis="ngModel" class="form-control" placeholder="PIS"
+                     [class.form-control-danger]="pis.invalid && pis.touched" [required]="true" [maxlength]="17" [disabled]="true">
+              <small class="form-text error" *ngIf="pis.invalid && pis.touched && pis.errors?.required">
+                PIS é obrigatório!
+              </small>
+            </div>
+
+            <div class="form-group">
+              <label for="input-email">Email</label>
+              <input name="email" [(ngModel)]="user.email" id="input-email" #email="ngModel" class="form-control" placeholder="Email address" pattern=".+@.+..+"
+                     [class.form-control-danger]="email.invalid && email.touched" [required]="true" [disabled]="submitted" [maxlength]="200" >
+              <small class="form-text error" *ngIf="email.invalid && email.touched && email.errors?.required">
+                Email é obrigatório!
+              </small>
+              <small class="form-text error" *ngIf="email.invalid && email.touched && email.errors?.pattern">
+                Email deve ser o real!
+              </small>
+            </div>
+
+            <button [disabled]="!form.valid || submitted" class="btn btn-block btn-hero-success" [class.btn-pulse]="submitted">
+              Atualizar
+            </button>
+          </div>
+      </div>
+    </form>
+  </nb-card-body>
+</nb-card>

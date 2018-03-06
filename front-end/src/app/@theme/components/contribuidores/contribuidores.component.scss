@@ -1,0 +1,12 @@
+@import '../../styles/themes';
+@import '~@nebular/theme/styles/global/bootstrap/breakpoints';
+@import '~bootstrap/scss/mixins/breakpoints';
+
+@include nb-install-component() {
+  .contribuidor h1 {
+    font-size: 1.3em;
+  }
+  .contribuidor {
+    margin-bottom: 5px;
+  }
+}

@@ -1,0 +1,16 @@
+<nb-card>
+  <nb-tabset fullWidth>
+    <nb-tab tabTitle="Boas">
+      <div class="contact" *ngFor="let mb of mensagensBoas">
+        <nb-user [picture]="mb.pictureUsuario" [name]="mb.nomeUsuario" [title]="mb.mensagem" size="large"></nb-user>
+        <span class="time">{{ mb.dataCadastro | date:'dd/MM/yyyy'}}</span>
+      </div>
+    </nb-tab>
+    <nb-tab tabTitle="Ruins">
+      <div class="contact" *ngFor="let mr of mensagensRuins">
+        <nb-user [picture]="mr.pictureUsuario" [name]="mr.nomeUsuario" [title]="mr.mensagem" size="large"></nb-user>
+        <span class="time">{{ mr.dataCadastro | date:'dd/MM/yyyy'}}</span>
+      </div>
+    </nb-tab>
+  </nb-tabset>
+</nb-card>

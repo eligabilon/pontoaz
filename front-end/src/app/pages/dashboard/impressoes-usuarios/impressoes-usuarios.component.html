@@ -1,0 +1,15 @@
+<nb-card>
+  <nb-tabset fullWidth>
+    <nb-tab tabTitle="Impressões Recentes">
+      <div class="contact" *ngFor="let rec of recentes">
+        <nb-user [picture]="rec.pictureUsuario" [name]="rec.nomeUsuario" size="large"></nb-user>
+      </div>
+    </nb-tab>
+    <nb-tab tabTitle="Impressões por Usuario">
+      <div class="contact" *ngFor="let user of porUsuarios">
+        <nb-user [picture]="user.pictureUsuario" [name]="user.nomeUsuario" size="large"></nb-user>
+        <span class="quantidade">{{user.total}}</span>
+      </div>
+    </nb-tab>
+  </nb-tabset>
+</nb-card>

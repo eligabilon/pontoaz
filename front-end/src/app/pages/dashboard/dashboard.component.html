@@ -1,0 +1,40 @@
+<div class="row">
+  <div class="col-md-4">
+    <nb-card>
+      <nb-card-header>Usuarios Cadastrados</nb-card-header>
+      <nb-card-body class="text-center">
+        <i class="icon-dashboard ion-person"></i>
+        <span class="item-dashboard">{{usuariosCadastrados}}</span>
+      </nb-card-body>
+    </nb-card>
+  </div>
+
+  <div class="col-md-4">
+    <nb-card>
+      <nb-card-header>Relatorios Impressos</nb-card-header>
+      <nb-card-body class="text-center">
+         <i class="icon-dashboard ion-printer"></i>
+         <span class="item-dashboard">{{impressoes}}</span>
+      </nb-card-body>
+    </nb-card>
+  </div>
+
+  <div class="col-md-4">
+    <nb-card>
+      <nb-card-header>Acessos</nb-card-header>
+      <nb-card-body>
+
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-7">
+    <ngx-mensagens></ngx-mensagens>
+  </div>
+
+  <div class="col-md-5">
+    <ngx-impressoes-usuarios></ngx-impressoes-usuarios>
+  </div>
+</div>
